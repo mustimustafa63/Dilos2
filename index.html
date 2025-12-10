@@ -3,261 +3,862 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mustafa Dilaray'i Ne Kadar Seviyor? 🥰</title>
+    <title>Dilara & Mustafa - Aşk Hikayemiz</title>
     <style>
-        /* CSS pour l'esthétique et l'adaptation mobile */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #FF1744;
+            --deep-red: #C62828;
+            --romantic-pink: #FF4081;
+            --rose-gold: #FFB6C1;
+            --dark-red: #8B0000;
+            --glass-white: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #FF1744, #C62828, #FF4081, #8B0000);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: #333;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Hearts */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: floatHeart 15s infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Glass Components */
+        .glass {
+            background: var(--glass-white);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 10px;
+            background: rgba(139, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            max-width: 600px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            padding: 5px 8px;
+        }
+
+        nav a:hover {
+            color: var(--romantic-pink);
+            text-shadow: 0 0 15px rgba(255, 64, 129, 0.8);
+        }
+
+        /* Main Container */
+        main {
+            position: relative;
+            z-index: 10;
+            padding-top: 60px;
+        }
+
+        section {
+            padding: 60px 20px;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #fff0f5; /* Rose très pâle et doux */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
             text-align: center;
-            padding: 20px;
+            min-height: 100vh;
+            position: relative;
         }
 
-        .container {
-            width: 100%;
-            max-width: 400px; /* Limite la largeur sur grand écran */
-            padding: 20px;
+        .hero::before {
+            content: "💕";
+            position: absolute;
+            font-size: 150px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+            animation: heartbeat 2s ease infinite;
         }
 
-        h1 {
-            font-size: 1.6rem;
-            color: #ff6f91; /* Rose mignon */
-            margin-bottom: 30px;
-            font-weight: bold;
+        @keyframes heartbeat {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
         }
 
-        #promptMessage {
-            font-size: 1.2rem;
-            color: #888;
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             margin-bottom: 20px;
-            min-height: 20px; /* Pour éviter que l'écran ne saute */
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 2;
         }
 
-        .choices {
-            display: flex;
-            flex-direction: column; /* Les choix sont empilés verticalement sur mobile */
-            gap: 15px;
+        .hero .subtitle {
+            font-size: 22px;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 2;
         }
 
-        .choice-btn {
-            background-color: #ffb8c4; /* Rose clair */
-            color: #d6336c;
-            border: 2px solid #ff9eb0;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: rgba(255, 23, 68, 0.3);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
             font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(255, 23, 68, 0.4);
+            animation: pulse 2s ease infinite;
+            position: relative;
+            z-index: 2;
         }
 
-        .choice-btn:hover {
-            background-color: #ff9eb0;
-            transform: translateY(-2px);
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(255, 23, 68, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 40px rgba(255, 23, 68, 0.7); }
         }
 
-        /* Styles pour l'état de l'amour maximal */
-        #finalContent {
-            display: none;
+        .cta-button:hover {
+            background: rgba(255, 23, 68, 0.5);
+            border-color: white;
+            box-shadow: 0 0 40px rgba(255, 23, 68, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* Our Story Section */
+        .story-section {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .story-section h2 {
+            font-size: 36px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin-bottom: 40px;
+            background: rgba(139, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(255, 23, 68, 0.5);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .timeline {
+            display: flex;
             flex-direction: column;
+            gap: 30px;
+        }
+
+        .timeline-item {
+            padding: 25px;
+            background: rgba(255, 23, 68, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transform: translateX(-20px);
+            opacity: 0;
+            animation: slideInLeft 0.6s ease forwards;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 23, 68, 0.3);
+            transform: translateX(10px);
+        }
+
+        @keyframes slideInLeft {
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .timeline-item h3 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-item .date {
+            color: var(--romantic-pink);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .gallery-section h2 {
+            font-size: 36px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            padding-bottom: 100%;
+            background: rgba(255, 23, 68, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--glass-border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 40px rgba(255, 23, 68, 0.6);
+            border-color: var(--romantic-pink);
+        }
+
+        .gallery-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
             align-items: center;
-            animation: fadeIn 1s;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
-        #finalMessage {
-            font-size: 2.2rem;
-            color: #e91e63;
-            margin-bottom: 20px;
-            font-weight: bold;
+        /* Stats Section */
+        .stats-section {
+            max-width: 600px;
+            width: 100%;
         }
 
-        #couplePhoto {
-            width: 90%;
-            max-width: 350px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            border: 5px solid white;
+        .stats-section h2 {
+            font-size: 36px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        /* Coeurs de confetti */
-        .heart {
-            position: fixed;
-            color: #ff6f91;
-            font-size: 30px;
-            animation: fall linear infinite;
+        .stat-card {
+            padding: 30px 20px;
+            background: rgba(255, 23, 68, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 64, 129, 0.3) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255, 23, 68, 0.6);
+            background: rgba(255, 23, 68, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            animation: iconPulse 2s ease infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 23, 68, 0.8);
+            position: relative;
             z-index: 1;
         }
 
-        @keyframes fall {
-            to { transform: translateY(105vh) rotate(360deg); }
+        .stat-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.95);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Heart Hourglass Animation */
+        .hourglass-heart {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: 0 auto 15px;
+        }
+
+        .hourglass-heart::before,
+        .hourglass-heart::after {
+            content: "❤️";
+            position: absolute;
+            font-size: 40px;
+            animation: heartFlow 3s ease infinite;
+        }
+
+        .hourglass-heart::before {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .hourglass-heart::after {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            animation-delay: 1.5s;
+        }
+
+        @keyframes heartFlow {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.3; transform: translateX(-50%) scale(0.8); }
+        }
+
+        /* Dreams Section */
+        .dreams-section {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .dreams-section h2 {
+            font-size: 36px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .dreams-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .dream-card {
+            padding: 30px;
+            background: rgba(255, 23, 68, 0.2);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .dream-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 12px 40px rgba(255, 23, 68, 0.5);
+            background: rgba(255, 23, 68, 0.3);
+        }
+
+        .dream-card h3 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .dream-card p {
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Message Section */
+        .message-section {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .message-section h2 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .message-box {
+            padding: 40px;
+            background: rgba(255, 23, 68, 0.25);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 2px solid var(--glass-border);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-box::before {
+            content: "💝";
+            position: absolute;
+            font-size: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.1;
+        }
+
+        .message-box p {
+            color: white;
+            font-size: 20px;
+            line-height: 1.8;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 36px; }
+            .hero .subtitle { font-size: 18px; }
+            nav a { font-size: 11px; padding: 5px 5px; }
+            section { padding: 40px 15px; }
+            .stat-number { font-size: 36px; }
+            .stat-icon { font-size: 40px; }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Hearts -->
+    <div class="hearts-container" id="hearts"></div>
 
-    <div class="container" id="mainContainer">
-        <h1>Mustafa Dilaray'i ne kadar seviyor?</h1>
-        
-        <p id="promptMessage">Bakalım doğru cevabı bulabilecek misin? 👇</p>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Ana Sayfa</a></li>
+            <li><a href="#story">Hikayemiz</a></li>
+            <li><a href="#gallery">Galeri</a></li>
+            <li><a href="#stats">Biz</a></li>
+            <li><a href="#dreams">Hayaller</a></li>
+            <li><a href="#travels">Seyahat</a></li>
+            <li><a href="#memories">Anılar</a></li>
+            <li><a href="#message">Mesaj</a></li>
+        </ul>
+    </nav>
 
-        <div class="choices" id="choiceButtons">
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <h1>Dilara & Mustafa</h1>
+            <p class="subtitle">Aşk Hikayemiz 💕</p>
+            <a href="#story" class="cta-button">Hikayemizi Keşfet</a>
+        </section>
+
+        <!-- Our Story Section -->
+        <section id="story" class="story-section">
+            <h2>Bizim Hikayemiz</h2>
+            
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/NHTrguAP2Vs" 
+                        allowfullscreen 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                </iframe>
             </div>
-    </div>
 
-    <div id="finalContent">
-        <div id="finalMessage">DOĞRU CEVAP! Seni Çok Seviyorum! ❤️</div>
-        <img id="couplePhoto" src="nous.jpg" alt="Nous deux" onerror="this.style.display='none'">
-    </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>💕 İlk Karşılaşma</h3>
+                    <div class="date">13 Kasım 2024</div>
+                    <p>Yollarımızın kesiştiği, hayatımızın sonsuza dek değiştiği o muhteşem gün. İlk bakışta kalbimiz birbirine aşık oldu.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>💍 Nişanımız</h3>
+                    <div class="date">17 Nisan 2025</div>
+                    <p>Hayatımızın en özel günü. Birbirimize sonsuza kadar bağlı kaldığımız, ailelerimizin önünde verdiğimiz söz.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>✨ Her Gün Yeni Bir Macera</h3>
+                    <p>Birlikte geçirdiğimiz her an, aşkımızın büyüdüğü, birbirimizi daha çok sevdiğimiz yeni bir macera.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>💖 Sonsuza Kadar</h3>
+                    <p>Bu sadece bir başlangıç. Önümüzde sonsuz anılar, sayısız mutluluk ve birlikte yaşlanmak var.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="gallery-section">
+            <h2>Anlarımız</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 1</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 2</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 3</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 4</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 5</div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-placeholder">📸 Fotoğraf 6</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats" class="stats-section">
+            <h2>Aşkımız Rakamlarla</h2>
+            <div class="stats-grid">
+                <div class="stat-card" id="days-card">
+                    <div class="hourglass-heart"></div>
+                    <div class="stat-number" id="days-counter">0</div>
+                    <div class="stat-label">Gün Birlikte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">😊</div>
+                    <div class="stat-number" data-target="10000">0</div>
+                    <div class="stat-label">Paylaşılan Gülümseme</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✈️</div>
+                    <div class="stat-number" data-target="5">0</div>
+                    <div class="stat-label">Seyahat</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💝</div>
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Sonsuz Aşk</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dreams Section -->
+        <section id="dreams" class="dreams-section">
+            <h2>Hayallerimiz</h2>
+            <div class="dreams-grid">
+                <div class="dream-card">
+                    <h3>🏡 Yuva Kurmak</h3>
+                    <p>Birlikte hayalini kurduğumuz evi inşa etmek, her köşesinde sevgimizin ve anılarımızın olduğu sıcak bir yuva.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>🌍 Dünyayı Gezmek</h3>
+                    <p>El ele dünyanın her köşesini keşfetmek, her şehirde yeni anılar biriktirmek, birlikte maceralar yaşamak.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>👨‍👩‍👧‍👦 Aile Kurmak</h3>
+                    <p>Güzel bir aile kurmak ve sevgimizi gelecek nesillere aktarmak. Çocuklarımıza aşkın ne olduğunu göstermek.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>💫 Birlikte Büyümek</h3>
+                    <p>Her gün birbirimizi daha çok sevmek, birlikte gelişmek, el ele yaşlanmak ve sonsuza kadar mutlu olmak.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Travels Section -->
+        <section id="travels" class="dreams-section">
+            <h2>Seyahatlerimiz</h2>
+            <div class="dreams-grid">
+                <div class="dream-card">
+                    <h3>🗼 Paris - Aşk Şehri</h3>
+                    <p>Eiffel Kulesi altında verdiğimiz sözler, Seine nehri kenarında el ele yürüyüşlerimiz...</p>
+                </div>
+                <div class="dream-card">
+                    <h3>🏖️ Antalya - Deniz Kenarı</h3>
+                    <p>Mavi sular, altın kumlar ve sonsuz günbatımları... Akdeniz'in incisi Antalya'da unutulmaz anlar.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>🕌 İstanbul - Şehrimiz</h3>
+                    <p>Boğaz'da gün batımı, tarihi sokaklarda el ele yürüyüşler... Şehrimizde binlerce anı.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memories Section -->
+        <section id="memories" class="dreams-section">
+            <h2>Özel Anılarımız</h2>
+            <div class="dreams-grid">
+                <div class="dream-card">
+                    <h3>🎂 İlk Doğum Günü Birlikte</h3>
+                    <p>Seninle kutladığım ilk doğum günü... Pastam, mumlarım ve en önemlisi sen vardın yanımda.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>🌹 İlk Çiçek Hediyesi</h3>
+                    <p>Bana verdiğin ilk çiçek demeti... O kırmızı güller hâlâ kalbimde saklanıyor.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>☔ Yağmurda Dans</h3>
+                    <p>O yağmurlu günde şemsiyemizi bırakıp dans ettiğimiz an... Islanmak hiç bu kadar güzel olmamıştı.</p>
+                </div>
+                <div class="dream-card">
+                    <h3>🌅 Gün Batımı Seyri</h3>
+                    <p>İlk birlikte izlediğimiz gün batımı... Güneş batarken senin elini tuttum ve hiç bırakmadım.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Message Section -->
+        <section id="message" class="message-section">
+            <h2>Sana, Dilara</h2>
+            <div class="message-box">
+                <p>
+                    "Seninle geçirdiğim her an hayatımın en değerli hazinesi. 
+                    Sen benim ışığım, ilhamım ve gülümsememin nedenisin. 
+                    Bu site, aşkımızın ve birlikte yaşadığımız tüm muhteşem 
+                    anların bir kutlaması. Seni bugün, yarın ve sonsuza kadar seviyorum."
+                </p>
+                <p style="margin-top: 20px; font-size: 24px;">
+                    💕 Tüm kalbimle, Mustafa
+                </p>
+            </div>
+            <a href="#hero" class="cta-button">Başa Dön</a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Dilara & Mustafa - Aşk Hikayemiz ❤️</p>
+            <p style="margin-top: 10px; font-size: 14px;">13 Kasım 2024 - Sonsuza Kadar</p>
+        </footer>
+    </main>
 
     <script>
-        const loveLevels = [
-            "Çok seviyor.",                     // Aime beaucoup
-            "Dünyalar kadar seviyor.",          // Aime grand comme le monde
-            "Kelimelere dökemeyecek kadar seviyor.", // Aime au point de ne pouvoir le décrire
-            "Sonsuza dek seviyor.",             // Aime pour toujours
-        ];
-
-        const choiceOptions = [
-            "Birazcık seviyor.",
-            "Normal seviyor.",
-            "Fena değil.",
-        ];
-        
-        const mainQuestion = "Mustafa Dilaray'i ne kadar seviyor?";
-        const mainContainer = document.getElementById('mainContainer');
-        const finalContent = document.getElementById('finalContent');
-        const choiceButtonsDiv = document.getElementById('choiceButtons');
-        const promptMessage = document.getElementById('promptMessage');
-
-        let currentLevel = 0; // Le niveau d'amour que Dilaray doit trouver (commence à 0)
-        const MAX_LEVEL = loveLevels.length - 1;
-
-        // --- Fonctions de base ---
-
-        function renderChoices() {
-            // Vide les boutons précédents
-            choiceButtonsDiv.innerHTML = '';
-
-            // Le bouton 'juste' (l'indice du niveau d'amour actuel)
-            const correctText = loveLevels[currentLevel];
-            
-            // On mélange les options fausses avec la bonne pour qu'elle ne soit pas toujours au même endroit
-            const allTexts = [...choiceOptions, correctText];
-            shuffleArray(allTexts);
-
-            // Met à jour le message
-            promptMessage.innerText = `Seviye ${currentLevel + 1}/${loveLevels.length}. Şimdi doğru cevabı bul!`;
-
-            allTexts.forEach(text => {
-                const button = document.createElement('button');
-                button.classList.add('choice-btn');
-                button.innerText = text;
-
-                // Si le texte du bouton correspond au niveau d'amour actuel, c'est le bon bouton
-                if (text === correctText) {
-                    button.onclick = handleCorrectChoice;
-                    button.id = 'correctBtn'; // Ajoute un ID pour l'effet visuel
-                } else {
-                    button.onclick = handleIncorrectChoice;
-                }
-                choiceButtonsDiv.appendChild(button);
-            });
-            
-            // Pour le fun, ajoute un effet visuel sur le bouton correct pour l'inciter
-            if (currentLevel < MAX_LEVEL) {
-                 setTimeout(() => {
-                    const correctBtn = document.getElementById('correctBtn');
-                    if(correctBtn) {
-                        correctBtn.style.backgroundColor = '#f7d7e3'; // Clignotement léger
-                        correctBtn.style.transform = 'scale(1.02)';
-                        setTimeout(() => {
-                             correctBtn.style.backgroundColor = '#ffb8c4';
-                             correctBtn.style.transform = 'scale(1)';
-                        }, 300);
-                    }
-                }, 500);
-            }
-        }
-
-        // --- Gestion des clics ---
-
-        function handleCorrectChoice() {
-            currentLevel++;
-
-            if (currentLevel > MAX_LEVEL) {
-                // VICTOIRE - Montre la photo
-                showFinalContent();
-            } else {
-                // NIVEAU SUIVANT
-                promptMessage.innerText = `ÇOK İYİ! Ama bu yeterli değil... Bir sonraki seviye!`;
-                
-                // Mettre à jour les choix après un court délai
-                setTimeout(renderChoices, 800);
-            }
-        }
-
-        function handleIncorrectChoice(event) {
-            // Rend le bouton incorrect temporairement plus sombre pour indiquer l'erreur
-            event.target.style.backgroundColor = '#ff4d4d'; // Rouge
-            event.target.style.color = 'white';
-            event.target.innerText = "YANLIŞ!";
-            
-            setTimeout(() => {
-                event.target.style.backgroundColor = '#ffb8c4';
-                event.target.style.color = '#d6336c';
-                event.target.innerText = choiceOptions.find(opt => opt === event.target.innerText) || choiceOptions[Math.floor(Math.random() * choiceOptions.length)];
-                renderChoices(); // Remet les boutons à jour au cas où le bouton correct ait bougé
-            }, 600);
-        }
-
-        function showFinalContent() {
-            mainContainer.style.display = 'none';
-            finalContent.style.display = 'flex';
-            createHearts();
-        }
-
-        // --- Fonctions utilitaires ---
-
-        // Fonction pour mélanger le tableau (pour que le bouton correct ne soit pas toujours le premier)
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-        
+        // Generate Floating Hearts
         function createHearts() {
-            const interval = setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '💖';
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.fontSize = Math.random() * 15 + 20 + "px";
-                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
-                heart.style.top = "-50px";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
-            }, 100);
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💝', '💘'];
             
-            // Arrête la pluie après 10 secondes
-            setTimeout(() => clearInterval(interval), 10000);
-        }
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15's'; heart.style.animationDuration = (10 + Math.random() * 10) + 's'; heartsContainer.appendChild(heart); } }
+// Calculate Days Together (from November 13, 2024)
+ function calculateDaysTogether() {
+     const startDate = new Date('2024-11-13');
+     const today = new Date();
+     const diffTime = today - startDate;
+     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+     console.log('Days together:', diffDays); // Debug
+     return diffDays;
+ }
 
-        // Initialisation au chargement
-        window.onload = renderChoices;
-    </script>
+ // Animate single counter
+ function animateCounter(element, target) {
+     let current = 0;
+     const duration = 2000;
+     const increment = target / (duration / 16);
+     
+     const update = () => {
+         current += increment;
+         if (current < target) {
+             element.textContent = Math.floor(current);
+             requestAnimationFrame(update);
+         } else {
+             element.textContent = target;
+         }
+     };
+     update();
+ }
 
-</body>
-</html>
+ // Setup all counters
+ function setupCounters() {
+     // Days counter - calculate and set immediately
+     const daysCounter = document.getElementById('days-counter');
+     const daysTotal = calculateDaysTogether();
+     console.log('Setting days to:', daysTotal); // Debug
+     
+     if (daysCounter) {
+         setTimeout(() => {
+             animateCounter(daysCounter, daysTotal);
+         }, 500);
+     }
+     
+     // Other counters
+     const counters = document.querySelectorAll('.stat-number[data-target]');
+     counters.forEach(counter => {
+         const target = parseInt(counter.getAttribute('data-target'));
+         setTimeout(() => {
+             animateCounter(counter, target);
+         }, 500);
+     });
+ }
+
+ // Initialize
+ window.addEventListener('DOMContentLoaded', () => {
+     createHearts();
+     
+     // Wait a bit then start counters
+     setTimeout(() => {
+         setupCounters();
+     }, 1000);
+ });
+
+ // Smooth scroll for navigation
+ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+     anchor.addEventListener('click', function (e) {
+         e.preventDefault();
+         const target = document.querySelector(this.getAttribute('href'));
+         if (target) {
+             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+         }
+     });
+ });
