@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beni Affedermisin? 🥺</title>
+    <style>
+        /* CSS pour le style et la mise en page */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7; /* Fond très clair et doux */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            transition: background-color 0.5s ease;
+        }
+
+        .container {
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            transition: all 0.5s ease;
+        }
+
+        #message {
+            font-size: 2em;
+            color: #ff69b4; /* Rose vif mignon */
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        #btnEvet {
+            background-color: #ff69b4; /* Rose vif */
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.5);
+            /* Les propriétés de taille et de position seront définies par JS */
+            position: relative;
+            z-index: 10; /* S'assure qu'il est au-dessus du "Hayir" */
+        }
+
+        #btnEvet.full-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            font-size: 5em;
+            line-height: 100vh;
+            z-index: 100;
+            background-color: #f08080; /* Rose plus doux pour la fin */
+            transition: all 1s ease-in-out;
+            box-shadow: none;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #btnHayir {
+            background-color: #ddd; /* Gris doux */
+            color: #333;
+        }
+
+        #btnHayir:hover {
+            background-color: #ccc;
+        }
+
+        #btnEvet:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        /* Styles pour les cœurs de confetti */
+        .heart {
+            position: fixed;
+            font-size: 30px;
+            color: #ff4d6d;
+            animation: fall 5s linear infinite;
+            pointer-events: none; /* Ne bloque pas le clic */
+            opacity: 0; /* Caché initialement */
+            z-index: 99;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <p id="message">Seni üzdüğüm için özür dilerim. Beni affeder misin?</p>
+
+        <div class="buttons" id="buttonGroup">
+            <button class="btn" id="btnEvet" onclick="handleEvet()">Evet</button>
+            <button class="btn" id="btnHayir" onclick="handleHayir()">Hayır</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript pour l'interactivité
+
+        const btnEvet = document.getElementById('btnEvet');
+        const btnHayir = document.getElementById('btnHayir');
+        const mainContainer = document.getElementById('mainContainer');
+
+        let evetSize = 1; // Taille initiale du bouton Evet
+
+        function handleHayir() {
+            // Logique pour agrandir le bouton "Evet"
+            evetSize += 0.5; // Augmente la taille de 50%
+            btnEvet.style.transform = `scale(${evetSize})`;
+            
+            // Pour que le bouton "Evet" grandisse de manière exponentielle, on peut aussi ajuster les paddings
+            let newPadding = 15 + (evetSize - 1) * 10;
+            btnEvet.style.padding = `${newPadding}px ${newPadding * 2}px`;
+
+            // On peut aussi changer le texte du bouton "Hayir" pour le rendre plus suppliant/mignon
+            if (evetSize > 2) {
+                btnHayir.innerText = "Sérieusement?";
+            } else if (evetSize > 3) {
+                btnHayir.innerText = "Vraiment pas?";
+            }
+        }
+
+        function handleEvet() {
+            // 1. Déclenche l'effet de plein écran
+            btnEvet.classList.add('full-screen');
+            btnEvet.innerText = "TEŞEKKÜRLER! 🥰"; // Message final
+            
+            // 2. Cache le reste du contenu
+            mainContainer.style.opacity = 0;
+            btnHayir.style.display = 'none';
+
+            // 3. Change le fond du body
+            document.body.style.backgroundColor = '#ffe0e6'; // Rose clair
+
+            // 4. Lance l'animation des cœurs
+            setTimeout(createHearts, 500); // Laisse le temps à l'écran de se transformer
+
+            // Optionnel: Désactive l'événement pour ne pas le déclencher plusieurs fois
+            btnEvet.onclick = null;
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💖'; // Le cœur lui-même
+            
+            // Positionnement aléatoire en haut de l'écran
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // Durée de 3s à 5s
+            heart.style.fontSize = (Math.random() * 20 + 20) + 'px'; // Taille de 20px à 40px
+
+            document.body.appendChild(heart);
+
+            // Supprime le cœur après la fin de son animation pour économiser de la mémoire
+            setTimeout(() => {
+                heart.remove();
+            }, 5000); 
+        }
+
+        function createHearts() {
+            // Crée des cœurs en continu pendant 10 secondes
+            let heartInterval = setInterval(createHeart, 150); // Toutes les 150ms
+
+            setTimeout(() => {
+                clearInterval(heartInterval);
+            }, 10000); // Arrête après 10 secondes
+        }
+
+    </script>
+</body>
+</html>
